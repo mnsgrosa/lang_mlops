@@ -5,7 +5,7 @@ from schema import TextInput, ListTextInput, Question
 class APIClient:
     def __init__(self, port='8000'):
         self.client = httpx.Client(timeout = 300)
-        self.base_url = f'http://localhost:{port}'
+        self.base_url = f'http://backend:{port}'
         self.getter = '/context/get'
         self.poster = '/context/post'
         self.llm = '/llm/response'
