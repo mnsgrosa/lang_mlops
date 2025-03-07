@@ -1,9 +1,16 @@
 services:
+  base-python:
+    build:
+      context: .
+      dockerfile: base.Dockerfile
+    image: myproject/base-python:latest
+
   frontend:
     build: frontend
     ports:
-      - "8501:8501"
+      - 8501:8501
     depends_on:
+     - base-python
      - backend
     volumes:
      - ./frontend:/app
@@ -13,13 +20,31 @@ services:
 
   backend:
     build: backend
+    env_file:
+      - .env
     ports:
       - 8000:8000
+    depends_on:
+      - base-python
     volumes:
       - ./backend:/app
     networks:
       - app
     container_name: backend
+
+  airflow:
+    build: airflow
+    env_file:
+      - .env
+    entrypoint: ['/bin/bash', 'entrypoint.sh']
+    ports:
+      - 8080:8080
+    depends_on:
+      - base-python
+      - ./backend:/app
+    networks:
+      - app
+    container_name: airflow
 
 networks:
   app:
