@@ -5,15 +5,17 @@ class TextInput(BaseModel):
     query_id: str
     text: str
 
-class ListTextInput(BaseModel):
+class QueryText(BaseModel):
     query: str
+    n_results: int
 
 class TextOutput(BaseModel):
     text:List[str]
 
 class Question(BaseModel):
     question: str
-
+    n_contexts: int
+    
 class LLMInput(BaseModel):
     text:str
 

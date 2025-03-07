@@ -5,6 +5,9 @@ class TextInput(BaseModel):
     query_id: str
     text: str
 
+class MultipleTextInput(BaseModel):
+    text_input:List[TextInput]
+
 class ListTextInput(BaseModel):
     query: str
 

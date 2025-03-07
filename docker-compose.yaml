@@ -6,7 +6,9 @@ services:
     image: langmlops/base-python:latest
 
   frontend:
-    build: frontend
+    build: ./airflow/dags/frontend
+    env_file:
+      - .env
     ports:
       - 8501:8501
     depends_on:
@@ -19,7 +21,7 @@ services:
     container_name: frontend
 
   backend:
-    build: backend
+    build: ./airflow/dags/backend
     env_file:
       - .env
     ports:

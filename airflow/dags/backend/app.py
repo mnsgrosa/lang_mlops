@@ -1,5 +1,6 @@
 from fastapi import FastAPI
-from .schema import TextInput, ListTextInput, Question, TextOutput, LLMInput, LLMOutput
+from typing import List
+from .schema import TextInput, ListTextInput, Question, TextOutput, LLMInput, LLMOutput, QueryText
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from .llm import MyLLM
@@ -18,14 +19,15 @@ app.add_middleware(
 )
 
 @app.post('/context/post')
-def add_context(textinput:TextInput):
-    db.add_context(textinput)
+def add_context(textinput:List[TextInput]):
+    ids = [item.query_id for item in textinput]
+    text = [item.text for item in textinput]
     return {'status': 'success'} 
 
 @app.get('/context/get')
-def get_context(textinput:ListTextInput):
-    results = db.query(query = textinput.query, n_results = 3).get('documents')
-    output = TextOutput(**{'text':results[0]})
+def get_context(textinput:QueryText):
+    results = db.query(query = textinput.query, n_results = textinput.n_results).get('documents')
+    output = TextOutput([item for item in results.get('documents')])
     return {'text':output}
 
 @app.get('/llm/response')

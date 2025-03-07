@@ -11,14 +11,12 @@ class APIClient:
         self.llm = '/llm/response'
 
     def post(self, text_input):
-        if not isinstance(text_input, dict):
-            raise ValueError("Input must be a dictionary")
-        
-        validated_input = TextInput(**text_input)
+        if not isinstance(text_input, list):
+            raise ValueError("Input must be a list of dictionaries")
         
         response = self.client.post(
             self.base_url + self.poster,
-            json=validated_input.model_dump(),
+            jsons = text_input,
         )
         
         response.raise_for_status()

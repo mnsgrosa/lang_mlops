@@ -16,6 +16,7 @@ default_args = {
 }
 
 my_reader = Reader()
+client = APIClient()
 
 def gather_pdfs():
-    my_reader.workflow()
+    text_inputs = my_reader.workflow()

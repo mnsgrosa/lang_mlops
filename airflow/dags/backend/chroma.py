@@ -9,9 +9,9 @@ class DBClient:
         except:
             self.collection = self.client.create_collection(name = 'contexts')
 
-    def add_context(self, textinput:TextInput):
-        self.collection.add(documents = textinput.text, ids = textinput.query_id)
+    def add_context(self, ids:str, texts:str):
+        self.collection.add(ids = ids, documents = texts)
         return self
     
     def query(self, query, n_results = 1):
-        return self.collection.query(query_texts = query, n_results = n_results)
+        return self.collection.query(query_texts = query, n_results = n_results).get('documents')
