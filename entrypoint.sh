@@ -11,4 +11,6 @@ if ! airflow users list | grep -q $AIRFLOW_USER; then
         --password $AIRFLOW_PASSWORD
 fi
 
-airflow webserver
+exec airflow webserver &
+
+exec airflow scheduler

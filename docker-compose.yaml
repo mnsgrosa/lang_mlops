@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: base.Dockerfile
-    image: myproject/base-python:latest
+    image: langmlops/base-python:latest
 
   frontend:
     build: frontend

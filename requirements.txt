@@ -1,6 +1,0 @@
-chromadb==0.6.3
-fastapi==0.115.11
-httpx==0.28.1
-langchain_ollama==0.2.3
-pydantic==2.10.6
-streamlit==1.42.2
