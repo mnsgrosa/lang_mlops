@@ -36,7 +36,7 @@ services:
     build: airflow
     env_file:
       - .env
-    entrypoint: ['/bin/bash', 'entrypoint.sh']
+    entrypoint: ['/entrypoint.sh']
     ports:
       - 8080:8080
     depends_on:
@@ -44,6 +44,10 @@ services:
       - ./backend:/app
     networks:
       - app
+    volumes:
+      - ./airflow/dags:${AIRFLOW_HOME}/dags
+      - ./airflow/logs:${AIRFLOW_HOME}/logs
+      - ./airflow/pluins:${AIRFLOW_HOME}/plugins
     container_name: airflow
 
 networks:

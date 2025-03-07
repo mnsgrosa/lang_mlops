@@ -1,12 +1,8 @@
-FROM python:3.11
-
-COPY requirements.txt app/requirements.txt
+FROM langmlops/base-python:latest
 
 WORKDIR /app
 
 COPY . /app
-
-RUN pip install -r requirements.txt
 
 EXPOSE 8000
 

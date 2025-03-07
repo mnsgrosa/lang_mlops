@@ -2,7 +2,7 @@ from PyPDF2 import PdfReader
 import os
 
 class Reader:
-    def __init__(self, path_to_pdfs, api_key):
+    def __init__(self):
         self.api_key = os.environ.get('API_KEY')
         self.path = os.environ.get('PDF_PATH')
         self.texts = []
