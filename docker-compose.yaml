@@ -2,7 +2,7 @@ services:
   base-python:
     build:
       context: .
-      dockerfile: base.Dockerfile
+      dockerfile: ./common/Dockerfile
     image: langmlops/base-python:latest
 
   frontend:
@@ -15,7 +15,7 @@ services:
      - base-python
      - backend
     volumes:
-     - ./frontend:/app
+     - ./airflow/dags/frontend:/app
     networks:
      - app
     container_name: frontend
@@ -29,7 +29,7 @@ services:
     depends_on:
       - base-python
     volumes:
-      - ./backend:/app
+      - ./airflow/dags/backend:/app
     networks:
       - app
     container_name: backend
@@ -38,18 +38,21 @@ services:
     build: airflow
     env_file:
       - .env
-    entrypoint: ['/entrypoint.sh']
     ports:
       - 8080:8080
     depends_on:
       - base-python
-      - ./backend:/app
+      - backend
     networks:
       - app
     volumes:
       - ./airflow/dags:${AIRFLOW_HOME}/dags
       - ./airflow/logs:${AIRFLOW_HOME}/logs
-      - ./airflow/pluins:${AIRFLOW_HOME}/plugins
+      - ./airflow/plugins:${AIRFLOW_HOME}/plugins
+      - ./airflow/scripts:/app
+    entrypoint:
+      - /bin/sh
+      - /app/entrypoint.sh
     container_name: airflow
 
 networks:

@@ -1,5 +1,5 @@
 import chromadb
-from .schema import TextInput
+from schema import TextInput
 
 class DBClient:
     def __init__(self, persist_dir = '/tmp/chroma'):
@@ -13,5 +13,5 @@ class DBClient:
         self.collection.add(ids = ids, documents = texts)
         return self
     
-    def query(self, query, n_results = 1):
+    def query(self, query, n_results):
         return self.collection.query(query_texts = query, n_results = n_results).get('documents')
