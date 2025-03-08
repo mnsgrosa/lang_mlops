@@ -20,7 +20,7 @@ class MyLLM:
             agora responda a seguinte pergunta:
             {prompt}
             '''
-            return self.chat.invoke(template).content
+            return self.chat.invoke(template)
         template = f'''
         You are a machine learning specialist and you are inserted in the following context
         {contexts}

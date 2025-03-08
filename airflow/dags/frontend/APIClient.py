@@ -32,18 +32,13 @@ class APIClient:
         response = self.client.request(
             method = 'GET',
             url = self.base_url + self.getter,
-            json = query.model_dump(),
+            json = query.model_dump()
         )
         
         response.raise_for_status()
         return response.json()
 
     def post_background(self, background):
-        if not isinstance(background, dict):
-            raise ValueError("Background must be a dictionary")
-
-        background = Background(**background)
-
         response = self.client.post(
             self.base_url + self.background,
             json = background
@@ -56,9 +51,9 @@ class APIClient:
             raise ValueError("Question must be a dictionary")
        
         response = self.client.request(
-            method='GET',
-            url=self.base_url + self.llm,
-            json=validated_input.model_dump()
+            method = 'GET',
+            url = self.base_url + self.llm,
+            json = question
         )
         
         response.raise_for_status()

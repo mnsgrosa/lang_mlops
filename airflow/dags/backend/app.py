@@ -30,7 +30,7 @@ def get_context(textinput:QueryText):
     results = db.query(query = textinput.query, n_results = textinput.n_results)
     return {'text':results}
 
-@app.post('/background/')
+@app.post('/background')
 def add_background(background:Background):
     model.get_background(background.bg)
     return  {'status': 'success'} 

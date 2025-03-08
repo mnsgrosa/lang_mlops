@@ -1,5 +1,6 @@
 import streamlit as st
 from APIClient import APIClient
+from schema import Background, Question
 
 client = APIClient()
 
@@ -18,7 +19,7 @@ with st.sidebar:
             try:
                 text_inputs = {'query_id': id_input, 'text': text_input}
                 response = client.post([text_inputs])
-                st.success("Context added successfully!")
+                st.success("Contexto adicionado com sucesso.")
             except Exception as e:
                 st.error(f"Error adding context: {e}")
         
@@ -40,12 +41,13 @@ with st.sidebar:
 
 with st.form('create_background'):
     st.markdown('## Escolha o background para o modelo')
-    background_input = st.text_area(label = 'Background', value = 'Escolha um background para o modelo')
-
-    submit_bg = st.form_submit_button(label = 'submit')
-
+    background_input = st.text_area(label='Background', value='Escolha um background para o modelo')
+    submit_bg = st.form_submit_button(label='submit')
+    
 if submit_bg:
-    client.post_background(background = {'bg': background_input})
+    background_obj = Background(bg = background_input)
+    client.post_background(background=background_obj.model_dump())
+    st.success('Background adicionado com sucesso.')
 
 st.markdown('# Janela de resposta')
 column1, column2 = st.columns(2)
@@ -63,8 +65,8 @@ with st.form('get_response'):
 
 if submit:
     try:
-        question = {'question': llm_input}
-        llm_response = client.get_llm_response(question)
+        question = {'question': llm_input, 'n_contexts': n_contexts}
+        llm_response = client.get_llm_response(Question(**question).model_dump())
         st.text(llm_response)
     except Exception as e:
         st.error(f"Error getting LLM response: {e}")
