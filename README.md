@@ -1,5 +1,56 @@
 # Objetivo do projeto, como rodar o projeto, o que aprendi fazendo esse projeto e fundamentacao teorica
 
+## 1. O que é esse projeto e como ele coloca em pratica os conceitos citados no fim do documento?
+
+Esse é um projeto que visa demonstrar algumas habilidades de MLOps com as seguinte stacks:
+
+```
+fastapi, chromadb, langchain, streamlit, httpx, airflow, pypdf2 e docker
+```
+
+O projeto utiliza o modelo gemini-2.0-flash visando demonstrar um projeto mlops simples,
+demonstrando conceitos como vectordb, criacao de api com fastapi, uso do langchain para chamar
+o modelo desejado, airflow para automatizar o rag baseado nos arquivos pdfs da pasta indicada 
+no arquivo .env que deve ser criado pelo usuario seguindo as variaveis indicadas na secao 'COMO RODAR O PROJETO'
+
+## 2. Como rodar o projeto
+
+Primeiramente é necessário ter o arquivo .env na raiz do projeto com as variaveis indicadas, docker e docker compose instalado para que o projeto rode corretamente
+
+### 2.1 Variaveis do arquivo .env
+```
+    API_KEY = 'sua_chave_google_ai_studio'
+    PDF_PATH = 'path/para/os/documentos/pdf'
+    AIRFLOW_HOME = '/opt/airflow'
+    AIRFLOW_USER = 'usuario_airflow'
+    AIRFLOW_FIRSTNAME = 'primeiro_nome_airflow'
+    AIRFLOW_LASTNAME = 'sobrenome_airflow'
+    AIRFLOW_EMAIL = 'seu@email.aqui'
+    AIRFLOW_ROLE = 'Admin'
+    AIRFLOW_PASSWORD = 'senha_desejada_para_o_airflow'
+```
+
+### 2.2 Comandos para rodar o projeto e como interagir com ele 
+
+Apos definido o arquivo .env basta rodar o comando abaixo para que o docker rode em segundo plano no seu terminal.
+
+```
+docker compose up -d 
+```
+
+### 2.3 Como interagir com o projeto
+
+Agora que o projeto esta rodando voce pode explorar-lo em 3 links diferentes rodando em sua maquina
+
+- Aqui voce vai interagir com a llm do projeto colocando o contexto desejado baseado nos seus pdfs 
+[Frontend da llm streamlit](http://localhost:8501)
+
+- Aqui voce vera os esqueletos de cada endpoint do fastapi que o modelo esta utilizando para a llm 
+[Endpoints da llm fastapi](http://localhost:8000)
+
+- Aqui voce tera acesso a interface grafica do apache-airflow que orquestra automaticamente a leitura dos pdfs a cada 5 minutos e podera ver a execucao dele e diversas outras informacoes
+[Orquestrador de leitor de pdfs](http://localhost:8080)
+
 ## 1. Teoria por de tras dos principais conceitos utilizados
 
 - Embeddings <br>
@@ -19,56 +70,6 @@
 
 - Programacao orientada a objeto(POO ou OOP)(sem se estender) <br>
  Paradigma de programacao utilizado focado no conceito de objetos, um objeto e algo que possui seus atributos e comportamentos(que chamaremos de metodos). Atributos sao no nosso caso tipos, por exemplo digamos que temos a classe carro e ele tem os seguintes atributos, velocidade atual,quantidade de gasolina, marca, cor etc... e seus comportamentos ou metodos sao acelerar, desacelerar e abastecer e quando instanciamos entao tornamos o objeto, podemos alterar sua construcao colocando os atributos desejados no momento e ir alterando de acordo com o decorrer do codigo. E uma classe pode ter seus filhos que herdam seus atributos e comportamentos mas podem haver mais atributos e comportamentos exemplo temos um SUV que herda de carro mas os atributos sao diferentes de outro filho como o esportivo e podem ter atributos diferentes como por exemplo tipo de combustivel ou outra diferenca que o desenvolvedor pensar.
-
-## 2. O que é esse projeto e como ele coloca em pratica os conceitos citados?
-
-Esse é um projeto que visa demonstrar algumas habilidades de MLOps com as seguinte stacks:
-
-```
-fastapi, chromadb, langchain, streamlit, httpx, airflow, pypdf2 e docker
-```
-
-O projeto utiliza o modelo gemini-2.0-flash visando demonstrar um projeto mlops simples,
-demonstrando conceitos como vectordb, criacao de api com fastapi, uso do langchain para chamar
-o modelo desejado, airflow para automatizar o rag baseado nos arquivos pdfs da pasta indicada 
-no arquivo .env que deve ser criado pelo usuario seguindo as variaveis indicadas na secao 'COMO RODAR O PROJETO'
-
-## 3. Como rodar o projeto
-
-Primeiramente é necessário ter o arquivo .env na raiz do projeto com as variaveis indicadas, docker e docker compose instalado para que o projeto rode corretamente
-
-### 3.1 Variaveis do arquivo .env
-```
-    API_KEY = 'sua_chave_google_ai_studio'
-    PDF_PATH = 'path/para/os/documentos/pdf'
-    AIRFLOW_USER = 'usuario_airflow'
-    AIRFLOW_FIRSTNAME = 'primeiro_nome_airflow'
-    AIRFLOW_LASTNAME = 'sobrenome_airflow'
-    AIRFLOW_EMAIL = 'seu@email.aqui'
-    AIRFLOW_ROLE = 'Admin'
-    AIRFLOW_PASSWORD = 'senha_desejada_para_o_airflow'
-```
-
-### 3.2 Comandos para rodar o projeto e como interagir com ele 
-
-Apos definido o arquivo .env basta rodar o comando abaixo para que o docker rode em segundo plano no seu terminal.
-
-```
-docker compose up -d 
-```
-
-### 3.3 Como interagir com o projeto
-
-Agora que o projeto esta rodando voce pode explorar-lo em 3 links diferentes rodando em sua maquina
-
-- Aqui voce vai interagir com a llm do projeto colocando o contexto desejado baseado nos seus pdfs 
-[Frontend da llm streamlit](http://localhost:8501)
-
-- Aqui voce vera os esqueletos de cada endpoint do fastapi que o modelo esta utilizando para a llm 
-[Endpoints da llm fastapi](http://localhost:8000)
-
-- Aqui voce tera acesso a interface grafica do apache-airflow que orquestra automaticamente a leitura dos pdfs a cada 5 minutos e podera ver a execucao dele e diversas outras informacoes
-[Orquestrador de leitor de pdfs](http://localhost:8080)
 
 ## 4. Aprendizado
 
