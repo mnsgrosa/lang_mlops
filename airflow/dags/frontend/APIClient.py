@@ -1,6 +1,6 @@
 import httpx
 import json
-from schema import TextInput, ListTextInput, Question
+from frontend.schema import TextInput, Question
 
 class APIClient:
     def __init__(self, port='8000'):
@@ -13,10 +13,10 @@ class APIClient:
     def post(self, text_input):
         if not isinstance(text_input, list):
             raise ValueError("Input must be a list of dictionaries")
-        
+
         response = self.client.post(
             self.base_url + self.poster,
-            jsons = text_input,
+            json = text_input,
         )
         
         response.raise_for_status()

@@ -1,5 +1,5 @@
 import chromadb
-from schema import TextInput
+from backend.schema import TextInput
 
 class DBClient:
     def __init__(self, persist_dir = '/tmp/chroma'):

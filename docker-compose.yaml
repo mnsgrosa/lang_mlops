@@ -4,7 +4,7 @@ services:
       context: .
       dockerfile: ./common/Dockerfile
     image: langmlops/base-python:latest
-
+  
   frontend:
     build: ./airflow/dags/frontend
     env_file:
@@ -12,14 +12,14 @@ services:
     ports:
       - 8501:8501
     depends_on:
-     - base-python
-     - backend
+      - base-python
+      - backend
     volumes:
-     - ./airflow/dags/frontend:/app
+      - ./airflow/dags/frontend:/app
     networks:
-     - app
+      - app
     container_name: frontend
-
+  
   backend:
     build: ./airflow/dags/backend
     env_file:
@@ -33,7 +33,7 @@ services:
     networks:
       - app
     container_name: backend
-
+  
   airflow:
     build: airflow
     env_file:
@@ -46,6 +46,7 @@ services:
     networks:
       - app
     volumes:
+      - ${PDF_PATH}:/app
       - ./airflow/dags:${AIRFLOW_HOME}/dags
       - ./airflow/logs:${AIRFLOW_HOME}/logs
       - ./airflow/plugins:${AIRFLOW_HOME}/plugins
