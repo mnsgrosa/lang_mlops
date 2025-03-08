@@ -1,5 +1,5 @@
 import chromadb
-from backend.schema import TextInput
+from schema import TextInput
 
 class DBClient:
     def __init__(self, persist_dir = '/tmp/chroma'):
@@ -9,7 +9,7 @@ class DBClient:
         except:
             self.collection = self.client.create_collection(name = 'contexts')
 
-    def add_context(self, ids:str, texts:str):
+    def add_context(self, ids, texts):
         self.collection.add(ids = ids, documents = texts)
         return self
     

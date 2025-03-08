@@ -1,13 +1,10 @@
 import streamlit as st
 from APIClient import APIClient
 
-# Initialize client
 client = APIClient()
 
-# Set page configuration
 st.set_page_config(layout='wide')
 
-# Sidebar for context input
 with st.sidebar:
     st.markdown('# Janela de contexto')
     st.markdown('## Adicione a base')
@@ -17,11 +14,10 @@ with st.sidebar:
         text_input = st.text_area(label='Adicionar contexto', value='Adicione os contextos a base de dados')
         submit_context = st.form_submit_button(label='submit')
         
-        # Only try to post if form is submitted
         if submit_context:
             try:
                 text_inputs = {'query_id': id_input, 'text': text_input}
-                response = client.post(text_inputs)
+                response = client.post([text_inputs])
                 st.success("Context added successfully!")
             except Exception as e:
                 st.error(f"Error adding context: {e}")
@@ -34,16 +30,23 @@ with st.sidebar:
         get_n_responses = st.number_input('Insira quantas respostas deseja', value = 1)
         get_context = st.form_submit_button(label='submit')
         
-        # Only try to get context if form is submitted
         if get_context:
             try:
-                get_texts = {'query': get_text}
+                get_texts = {'query': get_text, 'n_results':get_n_responses}
                 context_response = client.get(get_texts)
                 st.text(context_response)
             except Exception as e:
                 st.error(f"Error retrieving context: {e}")
 
-# LLM Response section
+with st.form('create_background'):
+    st.markdown('## Escolha o background para o modelo')
+    background_input = st.text_area(label = 'Background', value = 'Escolha um background para o modelo')
+
+    submit_bg = st.form_submit_button(label = 'submit')
+
+if submit_bg:
+    client.post_background(background = {'bg': background_input})
+
 st.markdown('# Janela de resposta')
 column1, column2 = st.columns(2)
 

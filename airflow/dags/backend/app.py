@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from typing import List
-from schema import TextInput, Question, TextOutput, LLMInput, LLMOutput, QueryText
+from schema import TextInput, Question, TextOutput, LLMInput, LLMOutput, QueryText, ListTextInput, Background
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from llm import MyLLM
@@ -22,14 +22,18 @@ app.add_middleware(
 def add_context(textinput:List[TextInput]):
     ids = [item.query_id for item in textinput]
     text = [item.text for item in textinput]
-    client.add_context()
+    db.add_context(ids, text)
     return {'status': 'success'} 
 
 @app.get('/context/get')
 def get_context(textinput:QueryText):
     results = db.query(query = textinput.query, n_results = textinput.n_results)
-    output = TextOutput([item for item in results.get('documents')])
-    return {'text':output}
+    return {'text':results}
+
+@app.post('/background/')
+def add_background(background:Background):
+    model.get_background(background.bg)
+    return  {'status': 'success'} 
 
 @app.get('/llm/response')
 def get_llm_response(prompt_body:Question):

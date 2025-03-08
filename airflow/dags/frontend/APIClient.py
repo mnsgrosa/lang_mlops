@@ -1,6 +1,6 @@
 import httpx
 import json
-from frontend.schema import TextInput, Question
+from schema import TextInput, Question, ListTextInput, QueryText, Background
 
 class APIClient:
     def __init__(self, port='8000'):
@@ -8,6 +8,7 @@ class APIClient:
         self.base_url = f'http://backend:{port}'
         self.getter = '/context/get'
         self.poster = '/context/post'
+        self.background = '/background'
         self.llm = '/llm/response'
 
     def post(self, text_input):
@@ -25,23 +26,34 @@ class APIClient:
     def get(self, query):
         if not isinstance(query, dict):
             raise ValueError("Query must be a dictionary")
-        
-        validated_input = ListTextInput(**query)
-        
+
+        query = QueryText(**query)
+
         response = self.client.request(
-            method='GET',
-            url=self.base_url + self.getter,
-            json=validated_input.model_dump()
+            method = 'GET',
+            url = self.base_url + self.getter,
+            json = query.model_dump(),
         )
         
+        response.raise_for_status()
+        return response.json()
+
+    def post_background(self, background):
+        if not isinstance(background, dict):
+            raise ValueError("Background must be a dictionary")
+
+        background = Background(**background)
+
+        response = self.client.post(
+            self.base_url + self.background,
+            json = background
+        )
         response.raise_for_status()
         return response.json()
 
     def get_llm_response(self, question):
         if not isinstance(question, dict):
             raise ValueError("Question must be a dictionary")
-        
-        validated_input = Question(**question)
        
         response = self.client.request(
             method='GET',

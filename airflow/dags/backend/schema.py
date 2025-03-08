@@ -1,9 +1,15 @@
 from pydantic import BaseModel
 from typing import List
 
+class Background(BaseModel):
+    bg:str
+
 class TextInput(BaseModel):
     query_id: str
     text: str
+
+class ListTextInput(BaseModel):
+    inputs:List[TextInput]
 
 class QueryText(BaseModel):
     query: str

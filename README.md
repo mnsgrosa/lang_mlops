@@ -44,6 +44,7 @@ Primeiramente é necessário ter o arquivo .env na raiz do projeto com as variav
     AIRFLOW_USER = 'usuario_airflow'
     AIRFLOW_FIRSTNAME = 'primeiro_nome_airflow'
     AIRFLOW_LASTNAME = 'sobrenome_airflow'
+    AIRFLOW_EMAIL = 'seu@email.aqui'
     AIRFLOW_ROLE = 'Admin'
     AIRFLOW_PASSWORD = 'senha_desejada_para_o_airflow'
 ```
