@@ -7,6 +7,7 @@ __pycache__/
 *.so
 
 airflow/logs/*
+*.pdf
 
 # dotenv
 .env
