@@ -15,3 +15,6 @@ class DBClient:
     
     def query(self, query, n_results):
         return self.collection.query(query_texts = query, n_results = n_results).get('documents')
+
+    def get(self):
+        return self.collection.get()

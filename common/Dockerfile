@@ -1,6 +1,6 @@
 FROM python:3.11-slim
 
-COPY ${PDF_PATH} .
+COPY common/pdf .
 
 COPY common/requirements.txt .
 

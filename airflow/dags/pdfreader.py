@@ -1,5 +1,6 @@
 from PyPDF2 import PdfReader
 from backend.schema import TextInput
+import numpy as np
 import hashlib
 import os
 
@@ -33,6 +34,6 @@ class Reader:
         
         for pdf in all_pdfs:
             texts = self.get_texts(pdf)
-            text_id = self.generate_id(pdf)
-            self.input_text.append(TextInput(query_id=str(text_id), text=texts)) 
+            text_id = str(np.random.randint(0,1e6))
+            self.input_text.append(TextInput(query_id=text_id, text=texts)) 
         return self.input_text

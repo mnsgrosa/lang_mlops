@@ -39,6 +39,12 @@ with st.sidebar:
             except Exception as e:
                 st.error(f"Error retrieving context: {e}")
 
+    with st.form(key = 'get_all'):
+        get_all = st.form_submit_button(label = 'submit')
+
+        if get_all:
+            st.text(client.get_all())
+
 with st.form('create_background'):
     st.markdown('## Escolha o background para o modelo')
     background_input = st.text_area(label='Background', value='Escolha um background para o modelo')

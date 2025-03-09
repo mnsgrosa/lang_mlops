@@ -9,6 +9,7 @@ class APIClient:
         self.getter = '/context/get'
         self.poster = '/context/post'
         self.background = '/background'
+        self.all = '/context/get/all'
         self.llm = '/llm/response'
 
     def post(self, text_input):
@@ -43,6 +44,15 @@ class APIClient:
             self.base_url + self.background,
             json = background
         )
+        response.raise_for_status()
+        return response.json()
+
+    def get_all(self):
+        response = self.client.request(
+            method = 'GET',
+            url = self.base_url + self.all,
+        )
+
         response.raise_for_status()
         return response.json()
 
