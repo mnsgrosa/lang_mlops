@@ -1,5 +1,5 @@
-from PyPDF2 import PdfReader
 from backend.schema import TextInput
+import slate3k as slate
 import numpy as np
 import hashlib
 import os
@@ -8,16 +8,15 @@ class Reader:
     def __init__(self):
         self.algorithm = 'sha256'
         self.api_key = os.environ.get('API_KEY')
-        self.path = '/app'
+        self.path = os.environ.get('PDF_PATH')
         self.input_text = []
         
     def get_texts(self, filename):
         full_path = os.path.join(self.path, filename)
-        text = ''
-        pdf_reader = PdfReader(full_path)
-        for page in pdf_reader.pages:
-            text += page.extract_text()
-        return text
+        with open(full_path, 'rb') as f:
+            extracted_text = slate.PDF(f)
+            extracted_text = ''.join(extracted_text)
+        return extracted_text
     
     def generate_id(self, filename):
         hash_func = hashlib.new(self.algorithm)
@@ -34,6 +33,6 @@ class Reader:
         
         for pdf in all_pdfs:
             texts = self.get_texts(pdf)
-            text_id = str(np.random.randint(0,1e6))
-            self.input_text.append(TextInput(query_id=text_id, text=texts)) 
+            text_id = str(self.generate_id(pdf))
+            self.input_text.append({'query_id':text_id, 'texts':texts}) 
         return self.input_text
