@@ -4,6 +4,8 @@ services:
       context: .
       dockerfile: ./common/Dockerfile
     image: langmlops/base-python:latest
+    volumes:
+      - ./common/pdf:/app/common/pdf
   
   frontend:
     build: ./airflow/dags/frontend
@@ -46,7 +48,6 @@ services:
     networks:
       - app
     volumes:
-      - ${PDF_PATH}:/app
       - ./airflow/dags:${AIRFLOW_HOME}/dags
       - ./airflow/logs:${AIRFLOW_HOME}/logs
       - ./airflow/plugins:${AIRFLOW_HOME}/plugins
