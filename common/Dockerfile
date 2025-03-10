@@ -1,6 +1,6 @@
 FROM python:3.11-slim
 
-COPY common/pdf .
+WORKDIR /app
 
 COPY common/requirements.txt .
 

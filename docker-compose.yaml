@@ -52,6 +52,7 @@ services:
       - ./airflow/logs:${AIRFLOW_HOME}/logs
       - ./airflow/plugins:${AIRFLOW_HOME}/plugins
       - ./airflow/scripts:/app
+      - ./common/pdf:/app/common/pdf  
     entrypoint:
       - /bin/sh
       - /app/entrypoint.sh
