@@ -1,11 +1,15 @@
 # Objetivo do projeto, como rodar o projeto, o que aprendi fazendo esse projeto e fundamentacao teorica
 
+## DISCLAIMER:
+
+O airflow esta nao operando futuramente corrigirei-o.
+
 ## 1. O que é esse projeto e como ele coloca em pratica os conceitos citados no fim do documento?
 
 Esse é um projeto que visa demonstrar algumas habilidades de MLOps com as seguinte stacks:
 
 ```
-fastapi, chromadb, langchain, streamlit, httpx, airflow, pypdf2 e docker
+fastapi, chromadb, langchain, streamlit, httpx, airflow, slate3k e docker
 ```
 
 O projeto utiliza o modelo gemini-2.0-flash visando demonstrar um projeto mlops simples,
@@ -20,7 +24,6 @@ Primeiramente é necessário ter o arquivo .env na raiz do projeto com as variav
 ### 2.1 Variaveis do arquivo .env
 ```
     API_KEY = 'sua_chave_google_ai_studio'
-    PDF_PATH = 'path/para/os/documentos/pdf'
     AIRFLOW_HOME = '/opt/airflow'
     AIRFLOW_USER = 'usuario_airflow'
     AIRFLOW_FIRSTNAME = 'primeiro_nome_airflow'
@@ -44,6 +47,8 @@ Agora que o projeto esta rodando voce pode explorar-lo em 3 links diferentes rod
 
 - Aqui voce vai interagir com a llm do projeto colocando o contexto desejado baseado nos seus pdfs 
 [Frontend da llm streamlit](http://localhost:8501)
+
+Na insercao do contexto basta jogar o arquivo pdf desejado
 
 - Aqui voce vera os esqueletos de cada endpoint do fastapi que o modelo esta utilizando para a llm 
 [Endpoints da llm fastapi](http://localhost:8000)
