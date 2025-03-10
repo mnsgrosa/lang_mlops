@@ -1,4 +1,5 @@
 import streamlit as st
+import slate3k as slate 
 from APIClient import APIClient
 from schema import Background, Question
 
@@ -12,11 +13,13 @@ with st.sidebar:
     
     with st.form(key='my_form'):
         id_input = st.text_area(label='Id', value='Insira um id unico para o contexto')
-        text_input = st.text_area(label='Adicionar contexto', value='Adicione os contextos a base de dados')
+        text_input = st.file_uploader('Envie seu pdf para adicionar contexto a base', type="pdf")
         submit_context = st.form_submit_button(label='submit')
-        
+
         if submit_context:
             try:
+                text_input = slate.PDF(text_input)
+                text_input = ' '.join(text_input)
                 text_inputs = {'query_id': id_input, 'text': text_input}
                 response = client.post([text_inputs])
                 st.success("Contexto adicionado com sucesso.")

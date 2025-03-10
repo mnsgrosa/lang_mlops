@@ -4,8 +4,6 @@ services:
       context: .
       dockerfile: ./common/Dockerfile
     image: langmlops/base-python:latest
-    volumes:
-      - ./common/pdf:/app/common/pdf
   
   frontend:
     build: ./airflow/dags/frontend
@@ -48,12 +46,12 @@ services:
     networks:
       - app
     volumes:
-      - ./airflow/dags:${AIRFLOW_HOME}/dags
-      - ./airflow/logs:${AIRFLOW_HOME}/logs
-      - ./airflow/plugins:${AIRFLOW_HOME}/plugins
+      - ./airflow/dags:/app/airflow/dags
+      - ./airflow/logs:/app/airflow/logs
+      - ./airflow/plugins:/app/airflow/plugins
       - ./airflow/scripts:/app
-      - ./common/pdf:/app/common/pdf  
-    entrypoint:
+
+    entrypoint:  
       - /bin/sh
       - /app/entrypoint.sh
     container_name: airflow

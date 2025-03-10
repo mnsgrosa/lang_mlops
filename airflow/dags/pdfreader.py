@@ -8,7 +8,7 @@ class Reader:
     def __init__(self):
         self.algorithm = 'sha256'
         self.api_key = os.environ.get('API_KEY')
-        self.path = os.environ.get('PDF_PATH')
+        self.path = '/dags/pdf/'
         self.input_text = []
         
     def get_texts(self, filename):

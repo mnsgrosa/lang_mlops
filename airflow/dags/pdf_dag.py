@@ -5,6 +5,7 @@ from airflow import DAG
 from airflow.operators.python import PythonOperator
 from datetime import datetime, timedelta
 from frontend.schema import TextInput
+import os
 
 
 default_args = {
@@ -32,7 +33,7 @@ def upload_pdfs():
     try:
         client.post(my_reader.input_text)
     except:
-        raise Exception('Error in uploading to API')
+        raise Exception(f"Error in uploading to API {os.listdir('/dags/pdf')}")
         return {'success': False}
     return {'success': True}
 
