@@ -1,54 +1,230 @@
-# Objetivo do projeto, como rodar o projeto, o que aprendi fazendo esse projeto e fundamentacao teorica
+# MLOps Demo Project (Bilingual: Português/English)
 
-## DISCLAIMER:
+---
 
-O airflow esta nao operando futuramente corrigirei-o.
+## 📑 Table of Contents
 
-## 1. O que é esse projeto e como ele coloca em pratica os conceitos citados no fim do documento?
+- [Português](#português)
+- [English](#english)
 
-Esse é um projeto que visa demonstrar algumas habilidades de MLOps com as seguinte stacks:
+---
 
-```
-fastapi, chromadb, langchain, streamlit, httpx, airflow, slate3k e docker
-```
+<a name="português"></a>
+# 🇧🇷 Português
 
-O projeto utiliza o modelo gemini-2.0-flash visando demonstrar um projeto mlops simples,
-demonstrando conceitos como vectordb, criacao de api com fastapi, uso do langchain para chamar
-o modelo desejado, airflow para automatizar o rag baseado nos arquivos pdfs da pasta indicada 
-no arquivo .env que deve ser criado pelo usuario seguindo as variaveis indicadas na secao 'COMO RODAR O PROJETO'
+## Objetivo do Projeto
 
-## 2. Como rodar o projeto
-
-Primeiramente é necessário ter o arquivo .env na raiz do projeto com as variaveis indicadas, docker e docker compose instalado para que o projeto rode corretamente
-
-### 2.1 Variaveis do arquivo .env
-```
-    API_KEY = 'sua_chave_google_ai_studio'
-    AIRFLOW_HOME = '/opt/airflow'
-    AIRFLOW_USER = 'usuario_airflow'
-    AIRFLOW_FIRSTNAME = 'primeiro_nome_airflow'
-    AIRFLOW_LASTNAME = 'sobrenome_airflow'
-    AIRFLOW_EMAIL = 'seu@email.aqui'
-    AIRFLOW_ROLE = 'Admin'
-    AIRFLOW_PASSWORD = 'senha_desejada_para_o_airflow'
-```
-
-### 2.2 Comandos para rodar o projeto e como interagir com ele 
-
-Apos definido o arquivo .env basta rodar o comando abaixo para que o docker rode em segundo plano no seu terminal.
+Este projeto visa facilitar a vida de usuários que desejam obter informações por chat com base em documentos PDFs que possuam.
 
 ```
-docker compose up -d 
+fastapi, chromadb, langchain, streamlit, httpx, slate3k, docker
 ```
 
-### 2.3 Como interagir com o projeto
+O objetivo é criar um pipeline simples de RAG (Retrieval Augmented Generation) com LLM, demonstrando conceitos como banco vetorial, API, frontend interativo e automação.
 
-Agora que o projeto esta rodando voce pode explorar-lo em 3 links diferentes rodando em sua maquina
+---
 
-- Aqui voce vai interagir com a llm do projeto colocando o contexto desejado baseado nos seus pdfs 
-[Frontend da llm streamlit](http://localhost:8501)
+## Estrutura do Projeto
 
-Na insercao do contexto basta jogar o arquivo pdf desejado
+```
+lang_mlops/
+├── backend/        # FastAPI, lógica do LLM, ChromaDB, Langchain
+├── frontend/       # Streamlit app para interação do usuário
+├── common/         # Utilidades e código compartilhado
+├── schemas/        # Schemas Pydantic para API
+├── scripts/        # Scripts auxiliares
+├── pdfreader.py    # Leitura de PDFs
+├── docker-compose.yaml
+└── README.md
+```
+
+- **backend/**: Endpoints FastAPI, integração com LLM (via Langchain) e banco vetorial (ChromaDB).
+- **frontend/**: Aplicação Streamlit para upload de PDFs, busca e interação com a LLM.
+
+---
+
+## Como Rodar o Projeto
+
+### Pré-requisitos
+- Python >= 3.10
+- Docker & Docker Compose
+- Arquivo `.env` na raiz do projeto com as variáveis necessárias
+
+### Rodando o Projeto
+
+Com o `.env` pronto, execute:
+
+```sh
+docker compose up -d
+```
+
+### Como Usar
+
+- **Frontend (Streamlit):**
+    - [http://localhost:8501](http://localhost:8501)
+    - Faça upload de PDFs para adicionar contexto e faça perguntas baseadas neles.
+
+- **Backend (FastAPI):**
+    - Principais endpoints:
+        - `/context/post` (POST): Adiciona contexto ao banco vetorial.
+        - `/context/get` (GET): Busca contexto similar.
+        - `/context/get/all` (GET): Retorna todo o contexto armazenado.
+        - `/background` (POST): Define contexto de fundo para a LLM.
+        - `/llm/response` (GET): Retorna resposta da LLM baseada no contexto.
+
+---
+
+## Funcionalidades
+
+- [x] Upload de PDFs e extração de contexto (Streamlit)
+- [x] Banco vetorial com ChromaDB
+- [x] API com FastAPI para armazenamento e busca de contexto
+- [x] Integração com LLM via Langchain
+- [x] Dockerização completa
+
+---
+
+## Fundamentação Teórica
+
+- **Vector DB (ChromaDB):** Utiliza embeddings para armazenar e buscar contexto textual.
+- **RAG (Retrieval Augmented Generation):** Técnica para guiar respostas de LLMs com base em contexto externo.
+- **Langchain:** Abstração para integração com LLMs e fluxos de RAG.
+
+---
+
+## O que foi aprendido
+
+O projeto consolidou conhecimentos em orientação a objetos, RAG, embeddings, APIs, automação, integração de serviços e dockerização.
+
+---
+
+## Notas Finais
+
+Sinta-se à vontade para abrir issues ou contribuir!
+
+---
+
+<a name="english"></a>
+# 🇬🇧 English
+
+## Project Purpose
+
+This project is intended for users who want to get information from their own PDF documents through a chat-like experience.
+
+```
+fastapi, chromadb, langchain, streamlit, httpx, slate3k, docker
+```
+
+The goal is to create a simple RAG pipeline with LLM, demonstrating concepts such as vector database, API, interactive frontend, and automation.
+
+---
+
+## Project Structure
+
+```
+lang_mlops/
+├── backend/        # FastAPI, LLM logic, ChromaDB, Langchain
+├── frontend/       # Streamlit app for user interaction
+├── common/         # Utilities and shared code
+├── schemas/        # Pydantic schemas for API
+├── scripts/        # Auxiliary scripts
+├── pdfreader.py    # PDF reading
+├── docker-compose.yaml
+└── README.md
+```
+
+- **backend/**: FastAPI endpoints, integration with LLM (via Langchain) and vector DB (ChromaDB).
+- **frontend/**: Streamlit app for PDF upload, search, and LLM interaction.
+
+---
+
+## How to Run
+
+### Prerequisites
+- Python >= 3.10
+- Docker & Docker Compose
+- `.env` file at the project root with the required variables
+
+### Running the Project
+
+```
+
+### Rodando o Projeto | Running the Project
+
+Com o `.env` pronto, execute:
+With the `.env` file ready, run:
+
+```sh
+docker compose up -d
+```
+
+### Como Usar | How to Use
+
+- **Frontend (Streamlit):**
+    - [http://localhost:8501](http://localhost:8501)
+    - Faça upload de PDFs para adicionar contexto e faça perguntas baseadas neles.
+    - Upload PDFs to add context and ask questions based on them.
+
+- **Backend (FastAPI):**
+    - Endpoints principais:
+        - `/context/post` (POST): Adiciona contexto ao banco vetorial.
+        - `/context/get` (GET): Busca contexto similar.
+        - `/context/get/all` (GET): Retorna todo o contexto armazenado.
+        - `/background` (POST): Define contexto de fundo para a LLM.
+        - `/llm/response` (GET): Retorna resposta da LLM baseada no contexto.
+    - Main endpoints:
+        - `/context/post` (POST): Add context to the vector database.
+        - `/context/get` (GET): Search for similar context.
+        - `/context/get/all` (GET): Get all stored context.
+        - `/background` (POST): Set background context for the LLM.
+        - `/llm/response` (GET): Get LLM response based on context.
+
+---
+
+## Funcionalidades | Features
+
+- [x] Upload de PDFs e extração de contexto (Streamlit)
+- [x] Banco vetorial com ChromaDB
+- [x] API com FastAPI para armazenamento e busca de contexto
+- [x] Integração com LLM via Langchain
+- [x] Dockerização completa
+- [ ] Orquestração automática com Airflow (em desenvolvimento)
+
+---
+
+## Fundamentação Teórica | Theoretical Foundation
+
+- **Vector DB (ChromaDB):**
+    - Utiliza embeddings para armazenar e buscar contexto textual.
+    - Uses embeddings to store and search textual context.
+
+- **RAG (Retrieval Augmented Generation):**
+    - Técnica para guiar respostas de LLMs com base em contexto externo.
+    - Technique to guide LLM responses based on external context.
+
+- **Langchain:**
+    - Abstração para integração com LLMs e fluxos de RAG.
+    - Abstraction for integrating with LLMs and RAG pipelines.
+
+---
+
+## O que foi aprendido | What I Learned
+
+O projeto consolidou conhecimentos em orientação a objetos, RAG, embeddings, APIs, automação, integração de serviços e dockerização.
+The project consolidated knowledge in OOP, RAG, embeddings, APIs, automation, service integration, and dockerization.
+
+---
+
+## Notas Finais | Final Notes
+
+
+
+
+---
+
+Sinta-se à vontade para abrir issues ou contribuir!
+Feel free to open issues or contribute!
+
 
 - Aqui voce vera os esqueletos de cada endpoint do fastapi que o modelo esta utilizando para a llm 
 [Endpoints da llm fastapi](http://localhost:8000)
